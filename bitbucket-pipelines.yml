@@ -1,0 +1,19 @@
+image: cypress/base:20.18.1  # Node 20 + browsers
+
+pipelines:
+  default:
+    - step:
+        name: Run Cypress Tests
+        caches:
+          - node
+        script:
+          # 1. Install dependencies
+          - npm ci
+          # 2. Verify Cypress is installed correctly
+          - npx cypress verify
+          # 3. Run tests in headless Chrome
+          - npx cypress run --browser chrome
+        artifacts:
+          - cypress/results/**
+          - cypress/videos/**
+          - cypress/screenshots/**
